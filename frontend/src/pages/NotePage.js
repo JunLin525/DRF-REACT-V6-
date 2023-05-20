@@ -23,10 +23,11 @@ const NotePage = () => {
         method: "PUT",
         headers: {
             'Content-Type': 'application/json'
-        }
+        },
+        body:JSON.stringify(note)
       })
     }
-
+    let handleSubmit =()
   return (
     <div className="note" >
       <div className="note-header">
