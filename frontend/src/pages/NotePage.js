@@ -1,10 +1,12 @@
 import React, {useState, useEffect} from 'react'
 import { useParams } from 'react-router-dom';
 import { ReactComponent as Arrowleft } from '../assets/arrow-left.svg'
-import { Link } from 'react-router-dom'
+//import { Link } from 'react-router-dom'
+import {useNavigate} from 'react-router-dom';
 const NotePage = () => {
 
   const{ noteID } = useParams();
+  const navigate = useNavigate();
   let [note, setNote] = useState(null)
 
 
@@ -18,23 +20,36 @@ const NotePage = () => {
     getNote()
   }, [noteID])
     
-    let updateNote async () => {
-      fetch(`/api/notes/${noteId}/update/`,{
+    let updateNote = async () => {
+      try{
+      const response = await fetch(`/api/notes/${noteID}/update/`,{
         method: "PUT",
         headers: {
             'Content-Type': 'application/json'
         },
-        body:JSON.stringify(note)
+        body : JSON.stringify(note)
       })
+      if (response.ok){
+        console.log('Note updated successfully!')
+      } else {
+        console.error('Failed to update note', response.status)
+      }
+    } catch(error){
+      console.error('Error updating note', error)
+    }  
+
     }
-    let handleSubmit =()
+
+    let handleSubmit = async () => {
+      await updateNote()
+      navigate('/')
+    }
+
   return (
     <div className="note" >
       <div className="note-header">
         <h3>
-        <Link to ="/">
-        <Arrowleft />
-        </Link>
+        <Arrowleft onClick={handleSubmit} />
         </h3>
         
       </div>
