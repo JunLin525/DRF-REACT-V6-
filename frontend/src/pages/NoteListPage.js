@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import moduleName from '../components/Listitem'
 import ListItem from '../components/Listitem'
+import AddButton from '../components/AddButton'
 const NoteListPage = () => {
 
     let [notes, setNotes] = useState([])
@@ -24,6 +24,7 @@ const NoteListPage = () => {
                 <ListItem key={index} note={note} />
             ))}
       </div>
+      <AddButton />
     </div>
   )
 }
